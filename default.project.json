@@ -2,7 +2,7 @@
   "name": "container-swap",
   "tree": {
     "$className": "DataModel",
-    "ReplicatedStorage": {
+    "ServerStorage": {
       "$className": "ServerStorage",
       "plugin": {
         "$path": "src"
