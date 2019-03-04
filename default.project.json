@@ -1,0 +1,21 @@
+{
+  "name": "container-swap",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "$className": "ServerStorage",
+      "plugin": {
+        "$path": "src"
+      }
+    },
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+        "HttpEnabled": {
+          "Type": "Bool",
+          "Value": true
+        }
+      }
+    }
+  }
+}
