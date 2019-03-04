@@ -22,7 +22,7 @@ local pluginAction = plugin:CreatePluginAction(
 )
 
 local function swapContainer(instance)
-    local changeTo = (instance:IsA("Folder") and "Folder") or "Model"
+    local changeTo = (instance:IsA("Model") and "Folder") or "Model"
 
     local newContainer = Instance.new(changeTo)
 
@@ -34,6 +34,8 @@ local function swapContainer(instance)
 
     newContainer.Parent = instance.Parent
     instance.Parent = nil
+
+    return newContainer
 end
 
 local function swapSelectionContainers()
@@ -41,18 +43,33 @@ local function swapSelectionContainers()
 
     local selection = Selection:Get()
     local toSwap = {}
+    local unswappable = {}
+    local newContainers = {}
+    local newSelection = {}
 
     for _,instance in pairs(selection) do
         if instance:IsA("Model") or instance:IsA("Folder") then
             table.insert(toSwap,instance)
+        else
+            table.insert(unswappable,instance)
         end
     end
 
     HistoryService:SetWaypoint("Swapping container")
 
     for _,container in pairs(toSwap) do
-        swapContainer(container)
+        table.insert(newContainers,swapContainer(container))
     end
+
+    for _,instance in pairs(newContainers) do
+        table.insert(newSelection,instance)
+    end
+
+    for _,instance in pairs(unswappable) do
+        table.insert(newSelection,instance)
+    end
+
+    Selection:Set(newSelection)
 
     HistoryService:SetWaypoint("Container swapped")
 end
